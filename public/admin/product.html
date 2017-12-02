@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>系统管理-登录</title>
+  <title>系统管理-二级分类</title>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="lib/bootstrap-validator/css/bootstrapValidator.css">
+  <link rel="stylesheet" href="lib/nprogress/nprogress.css">
   <link rel="stylesheet" href="css/common.css">
 </head>
+
 <body>
   <div class="lt-aside">
     <div class="brand">
@@ -34,7 +37,7 @@
             <span class="glyphicon glyphicon-list"></span>
             分类管理
           </a>
-          <div class="child" style="display:none";>
+          <div class="child" style="display:block" ;>
             <a href="frist.html">一级菜单</a>
             <a href="secend.html">二级菜单</a>
           </div>
@@ -54,23 +57,45 @@
       <a class="pull-left icon-none" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
       <a class="pull-right icon-out" href="#"><span class="glyphicon glyphicon-log-out"></span></a>
     </div>
-
+    <!-- //面包屑导航 -->
     <div class="container-fluid">
       <ol class="breadcrumb">
         <li><a href="#">管理系统</a></li>
-        <li class="active">首页</li>
+        <!-- <li><a href="#">分类管理</a></li> -->
+        <li class="active">商品管理</li>
       </ol>
 
       <div class="lt_content">
-        
-        <div class="chart_left pull-left">11</div>
-        <div class="chart_right pull-right">22</div>
+        <button class="btn btn-default mb_20 btn_add">添加商品</button>
+      </div>
+      <!-- 分类表格 -->
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <td width="10%">序号</td>
+            <td width="20%">商品名称</td>
+            <td width="20%">商品描述</td>
+            <td width="10%">商品库存</td>
+            <td width="10%">商品尺寸</td>
+            <td width="10%">商品状态</td>
+            <td width="10%">操作</td>
+          </tr>
+        </thead>
+        <tbody>
+          <!--挖个坑-->
 
+        </tbody>
+      </table>
+      <!-- 分页功能 -->
+      <div class="text-right">
+        <ul id="paginator"></ul>
       </div>
     </div>
   </div>
+
+
   <!-- 模态框 -->
-  <div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -79,24 +104,129 @@
         </div>
         <div class="modal-body">
           <p class="text-danger">
-              <span class="glyphicon glyphicon-info-sign"></span>
-              <span>你是真的想找死么?</span>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <span>你是真的想找死么?</span>
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">大爷饶命</button>
           <button type="button" class="btn btn-primary fuckoff">我不怕死</button>
         </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+      </div>
+    </div>
+  </div>
 
+  <!-- 添加分类 -->
+  <div class="modal fade" tabindex="-1" id="product-modal">
+    <div class="modal-dialog modal-md">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">添加商品</h4>
+        </div>
+        <form id="form">
+          <div class="modal-body">
+            <div class="form-group">
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="true">
+                  <span class="dropdown-text">请选择二级分类</span>
+                  <span class="caret"></span>
+                  <input type="hidden" name="brandId">
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <!-- 在挖一个坑 -->
+                </ul>
+              </div>
+            </div>
+            <!-- 输入商品名称 -->
+            <div class="form-group">
+              <input type="text" autocomplete="off" name="proName" class="form-control" placeholder="请输入商品的名称">
+            </div>
+            <!-- 商品描述 -->
+            <div class="form-group">
+              <textarea rows="3" class="form-control" name="proDesc" placeholder="请输入商品描述"></textarea>
+            </div>
+            <!-- 商品库存 -->
+            <div class="form-group">
+              <input type="text" autocomplete="off" name="num" class="form-control" placeholder="请输入商品的库存">
+            </div>
+            <!-- 商品尺码 -->
+            <div class="form-group">
+              <input type="text" autocomplete="off" name="size" class="form-control" placeholder="请输入商品的尺码">
+            </div>
+            <!-- 商品的原价 -->
+            <div class="form-group">
+              <input type="text" autocomplete="off" name="oldPrice" class="form-control" placeholder="请输入商品的原价">
+            </div>
+            <!-- 商品现价 -->
+            <div class="form-group">
+              <input type="text" autocomplete="off" name="price" class="form-control" placeholder="请输入商品的价格">
+            </div>
+            <div class="form-group">
+              <div class="fileupload_box">
+                <button class="btn btn-default">上传图片</button>
+                <!-- 
+        
+                          input:file : 可以选择文件
+                          id:fileupload:方便获取
+                          name:pic1   :接口文档，后台通过name属性可以获取到这张图片
+                          data-url:    :图片上传的地址
+        
+                         -->
+                <input type="file" class="btn btn-default" id="fileupload" name="pic1" data-url="/category/addSecondCategoryPic">
+              </div>
+            </div>
+            <div class="form-group img_box">
+              <!-- <img src="images/none.png" width="100" height="100" alt=""> -->
+              <input type="hidden" name="productLogo">
+              <input type="hidden" name="statu" value="1">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary">添加</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/html" id="sql">
+    {{each rows v i}}
+    <tr>
+      <td>{{(page-1)*5+i+1}}</td>
+      <td>{{v.proName}}</td>
+      <td>{{v.proDesc}}</td>
+      <td>{{v.num}}</td>
+      <td>{{v.size}}</td>
+      <td>{{v.statu==1?"已上架":"已下架"}}</td>
+      <td>
+        {{if v.statu==1}}
+        <button class="btn btn-danger">下架</button> {{else}}
+        <button class="btn btn-success">上架</button> {{/if}}
+      </td>
+    </tr>
+    {{/each}}
+  </script>
+
+  <script type="text/html" id="sql2">
+    {{each rows v i}}
+    <li data-id="{{v.id}}"><a href="JavaScript:;">{{v.brandName}}</a></li>
+    {{/each}}
+  </script>
   <script src="lib/jquery/jquery.js"></script>
+  <script src="lib/jquery-fileupload/jquery.ui.widget.js"></script>
+  <script src="lib/jquery-fileupload/jquery.fileupload.js"></script>
   <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
+  <script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
   <script src="lib/nprogress/nprogress.js"></script>
-  <script src="lib/echarts/echarts.min.js"></script>
+  <script src="lib/artTemplate/template-web.js"></script>
+
   <script src="js/common.js"></script>
-  <script src="js/login.js"></script>
+  <script src="js/product.js"></script>
 </body>
+
 </html>

@@ -7,6 +7,7 @@
   <title>系统管理-登录</title>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
   <link rel="stylesheet" href="lib/bootstrap-validator/css/bootstrapValidator.css">
+  <link rel="stylesheet" href="lib/nprogress/nprogress.css">
   <link rel="stylesheet" href="css/common.css">
 </head>
 <body>
@@ -54,23 +55,38 @@
       <a class="pull-left icon-none" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
       <a class="pull-right icon-out" href="#"><span class="glyphicon glyphicon-log-out"></span></a>
     </div>
-
+    <!-- //面包屑导航 -->
     <div class="container-fluid">
       <ol class="breadcrumb">
         <li><a href="#">管理系统</a></li>
-        <li class="active">首页</li>
+        <li><a href="#">分类管理</a></li>
+        <li class="active">一级分类</li>
       </ol>
 
       <div class="lt_content">
-        
-        <div class="chart_left pull-left">11</div>
-        <div class="chart_right pull-right">22</div>
-
+          <button class="btn btn-default mb_20 btn_add">添加分类</button>
       </div>
+      <!-- 分类表格 -->
+      <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <td width="20%">序号</td>
+            <td width="80%">分类名称</td>
+          </tr>
+          </thead>
+          <tbody>
+          <!--挖个坑-->
+          </tbody>
+        </table>
+        <div class="text-right">
+            <ul id="paginator"></ul>
+        </div>
     </div>
   </div>
+
+
   <!-- 模态框 -->
-  <div class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal fade" tabindex="-1" >
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -87,16 +103,50 @@
           <button type="button" class="btn btn-default" data-dismiss="modal">大爷饶命</button>
           <button type="button" class="btn btn-primary fuckoff">我不怕死</button>
         </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+      </div>
+    </div>
+  </div>
 
+  <!-- 添加分类 -->
+  <div class="modal fade" tabindex="-1" id="first-modal">
+      <div class="modal-dialog modal-sm" >
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">添加分类</h4>
+          </div>
+          <form id="form">
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" autocomplete="off" name="categoryName" class="form-control" placeholder="请输入一级分类">
+                  </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              <button type="submit" class="btn btn-primary">添加</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+  <script type="text/html" id="sql">
+    {{each rows v i}}
+    <tr>
+      <td>{{(page-1)*5+i+1 }}</td>
+      <td>{{v.categoryName }}</td>
+    </tr>
+    {{/each}}
+  </script>
   <script src="lib/jquery/jquery.js"></script>
   <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
+  <script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
   <script src="lib/nprogress/nprogress.js"></script>
-  <script src="lib/echarts/echarts.min.js"></script>
+  <script src="lib/artTemplate/template-web.js"></script>
+
   <script src="js/common.js"></script>
-  <script src="js/login.js"></script>
+  <script src="js/first.js"></script>
 </body>
 </html>
